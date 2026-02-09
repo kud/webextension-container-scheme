@@ -63,26 +63,24 @@
             <!-- Security confirmation -->
             <div id="securityConfirmationContainer" class="hidden">
                 <div class="title">
-                    <h1 class="title-text">Warning: Open external links in a container</h1>
+                    <h1 class="title-text">Open link in container?</h1>
                 </div>
 
                 <div class="description">
                     <div>
                         <p>
-                            Someone, maybe you, has tried to open the following URL in your
-                            <span id="securityConfirmationContainerName"></span> container:
+                            Do you want to open this URL in the <span id="securityConfirmationContainerName"></span> container?
                         </p>
                         <p>
                             <span id="securityConfirmationUrl"></span>
                         </p>
-                        <p>If you do not recognize this action, maybe someone is trying to track you across your containers. In that case we recommend to go back.</p>
-                        <p>Otherwise, if you recongnize this action and/or it was your intention, you can proceed with the redirect.</p>
+                        <p>Only continue if you trust this link. Untrusted links may compromise your container isolation.</p>
                     </div>
                 </div>
 
                 <div class="button-container">
-                    <button id="securityConfirmationGoBack" class="primary" autofocus="true">Go Back (Recommended)</button>
-                    <button id="securityConfirmationConfirm">Continue</button>
+                    <button id="securityConfirmationGoBack" class="primary" autofocus="true">Cancel</button>
+                    <button id="securityConfirmationConfirm">Open Link</button>
                 </div>
             </div>
             <!-- / Security confirmation -->

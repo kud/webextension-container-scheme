@@ -1,5 +1,5 @@
 node_modules
-web-ext-artifacts
+dist
 .git
 build/yarn.lock
 src/tests/lib

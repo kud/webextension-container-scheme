@@ -19,8 +19,8 @@
   "scripts": {
     "dev": "web-ext run --firefox=nightly --source-dir=src",
     "dev:chrome": "web-ext run --target=chromium --source-dir=src",
-    "build": "rm -rf web-ext-artifacts/* 2>/dev/null || true && web-ext build --source-dir=src --artifacts-dir=web-ext-artifacts --ignore-files=tests",
-    "build:clean": "rm -rf web-ext-artifacts node_modules/.cache",
+    "build": "rm -rf dist/* 2>/dev/null || true && web-ext build --source-dir=src --artifacts-dir=dist --ignore-files=tests",
+    "build:clean": "rm -rf dist node_modules/.cache",
     "lint": "web-ext lint --source-dir=src && eslint --config build/.eslintrc.json --ignore-pattern src/tests/lib src",
     "lint:fix": "eslint --config build/.eslintrc.json --ignore-pattern src/tests/lib --fix src",
     "test": "echo 'Open src/tests/unit.html in Firefox to run tests'",

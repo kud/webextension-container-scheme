@@ -5,6 +5,7 @@
 const SIGNING_KEY_NAME = 'signing_key'
 export const POPUP_FOLDER_STATE = 'popup_folder_state'
 export const CONTAINER_SELECTOR_STATE = 'container_selector_config'
+const SKIP_SECURITY_CONFIRMATION = 'skip_security_confirmation'
 
 import { generateKey } from './security/keys.js'
 
@@ -41,5 +42,16 @@ export async function restoreState(component, initialState = {}) {
 export async function saveState(component, state) {
     await browser.storage.local.set({
         [component]: state
+    })
+}
+
+export async function getSkipSecurityConfirmation() {
+    const result = await browser.storage.local.get(SKIP_SECURITY_CONFIRMATION)
+    return result[SKIP_SECURITY_CONFIRMATION] || false
+}
+
+export async function setSkipSecurityConfirmation(skip) {
+    await browser.storage.local.set({
+        [SKIP_SECURITY_CONFIRMATION]: skip
     })
 }

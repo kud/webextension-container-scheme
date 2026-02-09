@@ -3,8 +3,8 @@ node_modules/
 /build/node_modules
 
 # Build artifacts
-web-ext-artifacts/
-/build/web-ext-artifacts
+dist/
+/build/dist
 *.zip
 *.xpi
 
