@@ -1,88 +1,89 @@
-# Open external links in a container
+# Container Scheme
 
-<img src="src/icons/extension-96.png">
+<img src="src/icons/extension-96.png" alt="Container Scheme Logo">
 
-_**Important:** this code corresponds to an early preview of the future 2.x.x branch. If you want to access the current stable code, please see [version 1.0.3](https://github.com/honsiorovskyi/open-url-in-container/tree/1.0.3)._
+> **Note**: This is a maintained fork of [open-url-in-container](https://github.com/honsiorovskyi/open-url-in-container) by [@kud](https://github.com/kud). The original project provided an excellent foundation, and this fork aims to continue its development and maintenance.
 
-This is a Firefox extension that enables support for opening links in specific containers using custom protocol handler.
-It works for terminal, OS shortcuts, bookmarks, password managers, regular HTML pages and many other things.
+A Firefox extension that enables opening links in specific containers using a custom protocol handler. It works seamlessly with terminal commands, OS shortcuts, bookmarks, password managers, HTML pages, and many other tools.
 
-Also it features a small popup that can be called from the icon in the address bar
-which provides a way to get the links or terminal commands for opening current page
-in any available container.
+The extension also features a convenient popup accessible from the address bar icon, providing an easy way to generate links or terminal commands for opening the current page in any available container.
 
-This extension can be installed from the [official Mozilla Add-Ons Store for Firefox](https://addons.mozilla.org/firefox/addon/open-url-in-container/).
+## Installation
+
+Install from the [Mozilla Add-Ons Store for Firefox](https://addons.mozilla.org/firefox/addon/open-url-in-container/).
 
 ![Extension screenshot](./docs/images/screenshot_main.png)
 
 ## Features
 
-- provides custom protocol handler to open URLs in containers
-- provides a UI to generate links, bookmarks and terminal commands
-- supports both command line and internal invocations
-- supports creation of containers on the fly
-- supports setting colors and icons when creating new containers
-- supports tabs pinning
-- supports opening tabs in reader mode
-- works well in combination with other extensions
+- 🔗 Custom protocol handler (`ext+container:`) to open URLs in containers
+- 🎨 UI to generate links, bookmarks and terminal commands
+- 💻 Support for both command line and internal invocations
+- ✨ Create containers on the fly with custom colors and icons
+- 📌 Tab pinning support
+- 📖 Reader mode support
+- 🔒 HMAC-SHA256 signature-based security to prevent clickjacking
+- 🤝 Works well with other extensions
 
 ## Examples
 
-Open `https://mozilla.org` in a container named `MyContainer`.
+### Open a URL in a container
 
 ```bash
-$ firefox 'ext+container:name=MyContainer&url=https://mozilla.org&signature=ea7214f675398e93764ba44504070221633b0d5dce6c4263715f1cca89ab5f86'
+firefox 'ext+container:name=MyContainer&url=https://mozilla.org&signature=ea7214f675398e93764ba44504070221633b0d5dce6c4263715f1cca89ab5f86'
 ```
 
-Open `https://mozilla.org` in a container named `MyContainer`. If the container doesn't exist, create it using an `orange` colored `fruit` icon. Also, pin the tab.
+### Open with custom container appearance
+
+Open `https://mozilla.org` in a container named `MyContainer`. If the container doesn't exist, create it with an `orange` colored `fruit` icon and pin the tab:
 
 ```bash
-$ firefox 'ext+container:name=MyContainer&color=orange&icon=fruit&url=https://mozilla.org&pinned=true&signature=ea7214f675398e93764ba44504070221633b0d5dce6c4263715f1cca89ab5f86'
+firefox 'ext+container:name=MyContainer&color=orange&icon=fruit&url=https://mozilla.org&pinned=true&signature=ea7214f675398e93764ba44504070221633b0d5dce6c4263715f1cca89ab5f86'
 ```
 
-Also it will work with the [links on the site](ext+container:name=MyContainer&url=https://mozilla.org):
+### Use in HTML links
 
 ```html
-<a href="ext+container:name=MyContainer&url=https://mozilla.org&signature=ea7214f675398e93764ba44504070221633b0d5dce6c4263715f1cca89ab5f86">Mozilla.Org in MyContainer</a>
+<a href="ext+container:name=MyContainer&url=https://mozilla.org&signature=ea7214f675398e93764ba44504070221633b0d5dce6c4263715f1cca89ab5f86">
+  Mozilla.org in MyContainer
+</a>
 ```
 
-### What is signature?
+## Security: What is a signature?
 
-Signature is very simple cryptographic signature of the URL passed to the extension.
+The signature is a cryptographic HMAC-SHA256 hash of the URL parameters, designed to protect you from clickjacking attacks.
 
-It is needed to protect you from situations when someone with malicious intentions,
-knowing that for instance you have a container named `Personal` with your private information,
-could somehow force you to click on a link that looks like `ext+container:name=Personal&url=https://evil.com/correlationID=XXX`,
-and therefore, thanks to `XXX` passed to `evil.com` in the `Personal` container, and the same `XXX` passed to the same `evil.com`
-but openly in a public container, track your identity across the containers.
+### Why signatures?
 
-To prevent it from happening, this extension will do the following:
-
-1. If it receives a link without signature (e.g. `ext+container:name=Personal&url=https://evil.com/correlationID=XXX`),
-it will **ask you** if you really want to open this link, therefore making you aware that someone might be trying to track you,
-and also providing a possibility to prevent this (by not opening the link).
-
-2. If it recieved a link with a signature (e.g. `ext+container:name=Personal&url=https://good.com/&signature=2f7154ebeb22dd3136213aef6e385eabf63aa2d42cabc5d61beff9d52c4c5daa`).
-it will check that this URL is signed by a key that is known **only to you and your local copy of this extension**.
-therefore guaranteeing that this request is legit, sanctioned by you and can be opened automatically.
-
-It is obvious that this extra step creates certain friction when using the extension, so that's why a couple of features
-to mitigate the inconvenince have been added:
-
-1. The extension now comes with a small popup that would provide you with an easy way to create secure links or terminal commands for any page you need to be opened in any container.
-
-2. The signing mechanism uses a simple and well-known yet pretty secure HMAC-SHA256 algorithm, and the signing key is avalable in the extension UI (please be careful with it!),
-therefore enabling you to easily integrate signature generation in your scripts or applications.
-
-3. The launcher included with the extension already has a built-in support for URL signing, therefore you can pass the signing key using environment variables,
-and keep using the launcher without having to deal with signatures at all (again, please be careful with the signing key!).
-
-## Launcher
-
-Shell launcher provides a shortcut for opening links in a more user-friendly and unix-style way.
+Imagine someone knows you have a container named `Personal` with private information. They could try to trick you into clicking a malicious link like:
 
 ```
-$ firefox-container --help
+ext+container:name=Personal&url=https://evil.com/correlationID=XXX
+```
+
+By using the same `XXX` in both your Personal container and a public container, they could track your identity across containers.
+
+### How protection works
+
+1. **Without signature**: The extension will ask for confirmation before opening the link, making you aware of potential tracking attempts
+
+2. **With signature**: The extension automatically verifies the URL was signed with your secret key (known only to you and your local extension), guaranteeing the request is legitimate
+
+### Making signatures convenient
+
+- **Popup UI**: Generate signed links and commands easily from the extension popup
+- **Simple algorithm**: Uses standard HMAC-SHA256, easy to integrate into scripts
+- **Shell launcher**: Built-in signing support via environment variables
+
+## Shell Launcher
+
+The launcher provides a user-friendly, Unix-style way to open links:
+
+```bash
+firefox-container --help
+```
+
+```
 firefox-container - open URL in a specific container in Firefox.
 
 Usage:
@@ -123,34 +124,57 @@ Where ICON is one of:
         --chill
 
 Environment variables:
-  (1)   OPEN_URL_IN_CONTAINER_SIGNING_KEY       signing key for the clickjacking prevention mechanism; if set to a non-empty value, SIGNATURE will be generated by automatically
+  (1)   OPEN_URL_IN_CONTAINER_SIGNING_KEY       signing key for the clickjacking prevention mechanism; if set to a non-empty value, SIGNATURE will be generated automatically
 ```
 
-### Installation example
+### Launcher Installation
 
 ```bash
-$ curl -sL https://github.com/honsiorovskyi/open-url-in-container/raw/master/launcher.sh | sudo tee /usr/bin/firefox-container > /dev/null
-$ sudo chmod 0755 /usr/bin/firefox-container
+curl -sL https://github.com/kud/webextension-container-scheme/raw/main/bin/launcher.sh | sudo tee /usr/bin/firefox-container > /dev/null
+sudo chmod 0755 /usr/bin/firefox-container
 ```
 
-## Build
+## Development
 
-### Step 1: Install node, npm, yarn
-### Step 2:
+### Prerequisites
+
+- Node.js >= 22.0.0
+- Firefox (preferably Nightly)
+
+### Setup
+
 ```bash
-$ git clone https://github.com/honsiorovskyi/open-url-in-container.git
-
-$ cd open-url-in-container/build
-
-$ yarn
-
-$ yarn build
+git clone https://github.com/kud/webextension-container-scheme.git
+cd webextension-container-scheme
+npm install
 ```
+
+### Available Commands
+
+```bash
+npm run dev              # Run in Firefox Nightly with auto-reload
+npm run dev:chrome       # Run in Chromium
+npm run build            # Build extension for distribution
+npm run lint             # Lint code
+npm run lint:fix         # Fix linting issues
+npm run format           # Format code with Prettier
+npm run test             # See test instructions
+```
+
+### Publishing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed publishing instructions.
+
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
 [Mozilla Public License Version 2.0](LICENSE)
 
-## Contibutions
+## Acknowledgments
 
-Contibutions are very welcome. There's no specific process right now, just open your PRs/issues in this repo.
+This project is a fork of [open-url-in-container](https://github.com/honsiorovskyi/open-url-in-container) originally created by [@honsiorovskyi](https://github.com/honsiorovskyi). We're grateful for the excellent foundation they built.
+
+See [CONTRIBUTORS](CONTRIBUTORS) for a full list of contributors.

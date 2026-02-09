@@ -1,9 +1,23 @@
+# Contributors
+
+## Current Maintainer
+
+- **kud** (https://github.com/kud) - Fork maintainer since 2026
+
+## Original Project Authors
+
+This project is a fork of [open-url-in-container](https://github.com/honsiorovskyi/open-url-in-container).
+
 Extension code by:
-- Denys Honsiorovskyi (https://github.com/honsiorovskyi)
-- attero (https://github.com/apfelchips)
+- Denys Honsiorovskyi (https://github.com/honsiorovskyi) - Original author
+- attero (https://github.com/apfelchips) - Contributor
 
 Extension icons by:
 - Pixel perfect (https://www.flaticon.com/authors/pixel-perfect from https://www.flaticon.com/)
 - Freepik (https://www.flaticon.com/authors/freepik) from https://www.flaticon.com/
 - Google (https://www.flaticon.com/authors/google) from https://flaticon.com/
 - Denys Honsiorovskyi (https://github.com/honsiorovskyi)
+
+## Acknowledgments
+
+We're grateful to the original project maintainers and contributors for their excellent work on this extension. This fork aims to continue development and maintenance of this valuable tool.

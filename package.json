@@ -1,0 +1,49 @@
+{
+  "name": "webextension-container-scheme",
+  "version": "2.0.0",
+  "description": "Open external links in specific Firefox containers using custom protocol handlers",
+  "private": true,
+  "type": "module",
+  "author": {
+    "name": "kud",
+    "url": "https://github.com/kud"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kud/webextension-container-scheme.git"
+  },
+  "license": "MPL-2.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "web-ext run --firefox=nightly --source-dir=src",
+    "dev:chrome": "web-ext run --target=chromium --source-dir=src",
+    "build": "rm -rf web-ext-artifacts/* 2>/dev/null || true && web-ext build --source-dir=src --artifacts-dir=web-ext-artifacts --ignore-files=tests",
+    "build:clean": "rm -rf web-ext-artifacts node_modules/.cache",
+    "lint": "web-ext lint --source-dir=src && eslint --config build/.eslintrc.json --ignore-pattern src/tests/lib src",
+    "lint:fix": "eslint --config build/.eslintrc.json --ignore-pattern src/tests/lib --fix src",
+    "test": "echo 'Open src/tests/unit.html in Firefox to run tests'",
+    "format": "prettier --write \"**/*.{js,json,html,css,md}\"",
+    "format:check": "prettier --check \"**/*.{js,json,html,css,md}\"",
+    "publish": "node -e \"const fs=require('fs'); const changelog=fs.readFileSync('CHANGELOG.md','utf8'); const sections=changelog.split(/## \\[/); const firstSection=sections[1]; const match=firstSection?firstSection.split(/\\n(?=## )/)[0]:''; const lines=match.split('\\n').slice(1); const notes=lines.join('\\n').trim(); fs.writeFileSync('.amo-metadata.json', JSON.stringify({release_notes:{en:notes}}, null, 2));\" && web-ext sign --channel=listed --upload-source-code --amo-metadata=.amo-metadata.json --source-dir=src",
+    "publish:help": "echo 'To publish: 1) Get API credentials from https://addons.mozilla.org/developers/addon/api/key/ 2) Set WEB_EXT_API_KEY and WEB_EXT_API_SECRET env vars 3) Run: npm run publish'",
+    "version": "node -e \"const pkg=require('./package.json'); const manifest=require('./src/manifest.json'); manifest.version=pkg.version; require('fs').writeFileSync('./src/manifest.json', JSON.stringify(manifest, null, 2) + '\\n'); const fs=require('fs'); const changelog=fs.readFileSync('CHANGELOG.md','utf8'); const today=new Date().toISOString().split('T')[0]; const newEntry='## ['+pkg.version+'] - '+today+'\\n\\n### Changed\\n- Version bump\\n\\n'; const headerMatch=changelog.match(/(# Changelog[\\s\\S]*?\\n\\n)(?=## \\[)/); if(headerMatch) { const header=headerMatch[1]; const rest=changelog.substring(headerMatch.index + headerMatch[1].length); const updated=header+newEntry+rest; fs.writeFileSync('CHANGELOG.md', updated); } else { console.error('Could not find changelog header'); } console.log('Updated manifest.json and CHANGELOG.md to version', pkg.version);\" && git add src/manifest.json CHANGELOG.md"
+  },
+  "devDependencies": {
+    "dotenv": "^17.0.3",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "web-ext": "^8.9.0"
+  },
+  "keywords": [
+    "browser-extension",
+    "firefox",
+    "webextension",
+    "containers",
+    "protocol-handler",
+    "privacy",
+    "security",
+    "contextual-identities"
+  ]
+}
