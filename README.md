@@ -14,8 +14,6 @@ Perfect for Raycast, Alfred, and other launcher apps.
 
 Install from the [Mozilla Add-Ons Store for Firefox](https://addons.mozilla.org/firefox/addon/open-url-in-container/).
 
-![Extension screenshot](./docs/images/screenshot_main.png)
-
 ## How It Works
 
 1. Click the extension icon in your toolbar
