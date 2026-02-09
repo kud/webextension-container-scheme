@@ -4,9 +4,11 @@
 
 > **Note**: This is a maintained fork of [open-url-in-container](https://github.com/honsiorovskyi/open-url-in-container) by [@kud](https://github.com/kud). The original project provided an excellent foundation, and this fork aims to continue its development and maintenance.
 
-A simple Firefox extension that enables opening links in specific containers using `ext+container:` URLs. Perfect for launcher apps like Raycast, Alfred, terminal scripts, password managers, and automating container isolation.
+**The simplest way to open links in Firefox containers.**
 
-Click the address bar icon to generate container URLs for the current page.
+Click the toolbar icon, select a container, and copy the URL. That's it.
+
+Perfect for Raycast, Alfred, and other launcher apps.
 
 ## Installation
 
@@ -14,55 +16,38 @@ Install from the [Mozilla Add-Ons Store for Firefox](https://addons.mozilla.org/
 
 ![Extension screenshot](./docs/images/screenshot_main.png)
 
-## Features
+## How It Works
 
-- 🔗 Custom protocol handler (`ext+container:`) to open URLs in containers
-- 🎨 Simple popup UI to generate container URLs
-- 💻 Perfect for launcher apps (Raycast, Alfred, etc.)
-- ✨ Create containers on the fly with custom colors and icons
-- 🤝 Works with password managers, scripts, and other tools
+1. Click the extension icon in your toolbar
+2. Select a container from the dropdown
+3. Copy the generated `ext+container:` URL
+4. Use it in Raycast, Alfred, scripts, or anywhere else
 
-## Usage
+That's it. No complexity, no settings, just container URLs.
 
-### Basic Example
+## Example URL
 
+```
+ext+container:name=Work&url=https://github.com
+```
+
+Opens GitHub in your "Work" container.
+
+## Use Cases
+
+**Raycast/Alfred:**
+- Copy the URL from the popup
+- Create commands that open specific sites in containers
+
+**Scripts:**
 ```bash
 firefox 'ext+container:name=Work&url=https://github.com'
 ```
 
-This opens GitHub in your "Work" container.
-
-### Use with Raycast/Alfred
-
-1. Click the extension icon in Firefox's address bar
-2. Select a container
-3. Copy the generated URL
-4. Use it in your launcher app
-
-### Create container with custom appearance
-
-```bash
-firefox 'ext+container:name=MyContainer&color=orange&icon=fruit&url=https://mozilla.org'
-```
-
-If `MyContainer` doesn't exist, it will be created with an orange color and fruit icon.
-
-### Use in HTML links
-
+**HTML/Bookmarks:**
 ```html
-<a href="ext+container:name=Work&url=https://github.com">
-  Open GitHub in Work container
-</a>
+<a href="ext+container:name=Work&url=https://github.com">GitHub (Work)</a>
 ```
-
-## URL Parameters
-
-- `name` - Container name (required)
-- `url` - URL to open (required)
-- `color` - Container color (optional: blue, turquoise, green, yellow, orange, red, pink, purple)
-- `icon` - Container icon (optional: fingerprint, briefcase, dollar, cart, circle, gift, vacation, food, fruit, pet, tree, chill)
-- `pinned` - Pin the tab (optional: true/false)
-- `openInReaderMode` - Open in reader mode (optional: true/false)
 
 ## Development
 

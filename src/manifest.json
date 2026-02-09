@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Container Scheme",
-    "description": "Open links in specific Firefox containers using ext+container: URLs. Click the address bar icon to generate container URLs (e.g., ext+container:name=Work&url=https://github.com) for the current page. Perfect for launcher apps like Raycast, password managers, terminal scripts, and automating container isolation.",
+    "description": "Simple tool to open links in specific Firefox containers. Click the toolbar icon, select a container, and copy the URL (e.g., ext+container:name=Work&url=https://github.com) for the current page. Perfect for Raycast, Alfred, and other launcher apps.",
     "version": "2.0.0",
 
     "browser_specific_settings": {
